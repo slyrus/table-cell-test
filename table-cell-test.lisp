@@ -5,12 +5,14 @@
 (cl:in-package #:table-cell-test)
 
 (defun draw-table (stream)
-  (formatting-table (stream)
+  (setf (stream-end-of-line-action stream) :wrap)
+  (draw-rectangle* stream 10 10 500 500 :ink +light-green+)
+  (formatting-table (stream :x-spacing 5)
     (dotimes (row 5)
       (formatting-row (stream)
         (dotimes (cell 5)
-          (formatting-cell (stream)
-            (format stream "row ~s, cell ~s" row cell)))))))
+          (formatting-cell (stream  :min-height 24)
+            (format stream "longer row ~s, cell ~s" row cell)))))))
 
 (defclass table-cell-test-pane (application-pane) ())
 
@@ -52,3 +54,5 @@
 ;;
 ;; To test the pdf, do:
 ;;   (table-cell-test-pdf)
+
+(table-cell-test-pdf)
