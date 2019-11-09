@@ -5,13 +5,14 @@
 (cl:in-package #:table-cell-test)
 
 (defun draw-table (stream)
-  (draw-rectangle* stream 10 10 500 500 :ink +light-green+)
+  (draw-rectangle* stream 10 10 400 400 :ink +light-green+)
+  (setf (stream-end-of-line-action stream) :wrap*)
   (formatting-table (stream :x-spacing 5)
     (dotimes (row 5)
       (formatting-row (stream)
         (dotimes (cell 5)
-          (formatting-cell (stream  :min-height 24)
-            (setf (stream-end-of-line-action stream) :wrap)
+          (formatting-cell (stream :min-height 24 :min-width 100)
+            (draw-rectangle* stream 10 10 40 40 :ink +lightsalmon+)
             (clime:with-temporary-margins (stream :left 0 :right 100)
               (format stream "This is some very long text that should wrap. row ~s, cell ~s" row cell))))))))
 
@@ -24,8 +25,8 @@
 (define-application-frame table-cell-test-app () ()
   (:panes
    (table-cell-test (make-pane 'table-cell-test-pane
-                          :width 400
-                          :height 400
+                          :width 200
+                          :height 200
                           :display-time nil
                           :display-function #'display-table)))
   (:layouts
