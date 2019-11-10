@@ -8,13 +8,13 @@
   (draw-rectangle* stream 10 10 400 400 :ink +light-green+)
   (setf (stream-end-of-line-action stream) :wrap*)
   (formatting-table (stream :x-spacing 5)
-    (dotimes (row 5)
+    (dotimes (row 2)
       (formatting-row (stream)
-        (dotimes (cell 5)
+        (dotimes (cell 2)
           (formatting-cell (stream :min-height 24 :min-width 100)
             (draw-rectangle* stream 10 10 40 40 :ink +lightsalmon+)
             (clime:with-temporary-margins (stream :left 0 :right 100)
-              (format stream "This is some very long text that should wrap. row ~s, cell ~s" row cell))))))))
+              (format stream "A This is some very long text that should wrap. B This is some very long text that should wrap. C This is some very long text that should wrap. D This is some very long text that should wrap. E This is some very long text that should wrap. row ~s, cell ~s" row cell))))))))
 
 (defclass table-cell-test-pane (application-pane) ())
 
@@ -25,8 +25,8 @@
 (define-application-frame table-cell-test-app () ()
   (:panes
    (table-cell-test (make-pane 'table-cell-test-pane
-                          :width 200
-                          :height 200
+                          :width 595
+                          :height 842
                           :display-time nil
                           :display-function #'display-table)))
   (:layouts
